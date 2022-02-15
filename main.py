@@ -4,6 +4,7 @@ from samples import *
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel
+from PyQt5.QtCore import Qt
 
 
 class MyWidget(QMainWindow):
@@ -12,19 +13,27 @@ class MyWidget(QMainWindow):
         uic.loadUi('map.ui', self)
         self.obj_name = 'Красная площадь'
         self.ll, self.spn = get_ll_span(self.obj_name)
+        self.z = 17
         print(self.ll, self.spn)
         self.show_picture()
 
-
     def show_picture(self):
-        ll_spn = f"ll={self.ll}&spn={self.spn}"
-        self.pixmap = QPixmap(get_map_img(ll_spn).name)
+        ll = f"ll={self.ll}"
+        self.pixmap = QPixmap(get_map_img(ll, 'map', 'z=' + str(self.z)).name)
         # Если картинки нет, то QPixmap будет пустым,
         # а исключения не будет
         # self.label = QLabel(self)
         # Отображаем содержимое QPixmap в объекте QLabel
         self.label.setPixmap(self.pixmap)
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_PageUp:
+            if self.z + 1 <= 17:
+                self.z += 1
+        elif event.key() == Qt.Key_PageDown:
+            if self.z - 1 >= 0:
+                self.z -= 1
+        self.show_picture()
 
 
 if __name__ == '__main__':

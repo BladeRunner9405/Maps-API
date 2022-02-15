@@ -96,13 +96,15 @@ def get_nearest_object(point, kind):
 
 
 def get_map_img(ll_spn=None, map_type="map", add_params=None):
+    print(ll_spn, map_type, add_params)
     if ll_spn:
         map_request = f"http://static-maps.yandex.ru/1.x/?{ll_spn}&l={map_type}"
     else:
         map_request = f"http://static-maps.yandex.ru/1.x/?l={map_type}"
-    print(map_request)
+
     if add_params:
         map_request += "&" + add_params
+    print(map_request)
     response = requests.get(map_request)
 
     if not response:

@@ -8,4 +8,7 @@ print(get_ll_span(object))
 ll, spn = get_ll_span(object)
 ll_spn = f"ll={ll}&spn={spn}"
 print(ll_spn)
+print(spn)
 print(get_map_img(ll_spn))
+print()
+print(spn)
